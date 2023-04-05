@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"project/initializers"
 	"project/pkg/routes"
 
@@ -19,4 +20,5 @@ func main() {
 	routes.UserRoute(route)
 	routes.CommonRoutes(route)
 	route.Run()
+	fmt.Println("hello")
 }
