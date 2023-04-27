@@ -44,20 +44,20 @@ func Signup(g *gin.Context) {
 	println(user.ID)
 	if user.ID > 0 {
 		flag = 1
-		err = []string{"email alreaddy exist try another email"}
+		err = append(err, "email alreaddy exist try another email")
 	}
 	// checking phone number
 	println(" phone number", body.PhoneNumber)
-	if len(body.PhoneNumber) < 10 {
+	if len(body.PhoneNumber) != 10 {
 		flag = 1
-		err = []string{"invalid phone number"}
+		err = append(err, "invalid phone number")
 	}
 	// checking phonenumber already exist
 	var phone models.Userdata
 	initializers.DB.First(&phone, "phone_number = ?", body.PhoneNumber)
 	if phone.ID > 0 {
 		flag = 1
-		err = []string{"phone number alreaddy exist try another number or login with otp"}
+		err = append(err, "phone number alreaddy exist try another number or login with otp")
 	}
 	if flag == 1 {
 		response.ErrorMessage(g, "login failed", err, 404)
