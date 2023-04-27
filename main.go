@@ -13,7 +13,6 @@ func init() {
 	initializers.ConnectDB()
 	initializers.SyncDB()
 }
-
 func main() {
 	route := gin.Default()
 	routes.AdminRoute(route)
