@@ -4,7 +4,7 @@ type Checkout struct {
 	Message string
 	Total   int
 	Walet   int
-	Address interface{}
+	Address []Address
 	Items   interface{}
 	Payment interface{}
 }

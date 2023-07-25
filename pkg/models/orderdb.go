@@ -16,6 +16,7 @@ type Return struct {
 	gorm.Model
 	UserID    int
 	ProductID int
+	OrderID   int
 	Quantity  int
 	Price     int
 	Status    string

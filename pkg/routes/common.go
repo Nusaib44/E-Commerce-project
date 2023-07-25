@@ -1,16 +1,17 @@
 package routes
 
 import (
-	"project/pkg/controllers"
+	"project/pkg/controllers/auth"
+	"project/pkg/controllers/common"
 
 	"github.com/gin-gonic/gin"
 )
 
 func CommonRoutes(r *gin.Engine) {
-	r.POST("/signup", controllers.Signup)
-	r.POST("/login", controllers.Login)
-	r.GET("/listproduct", controllers.DisplayProduct)
-	r.GET("/displaycategory", controllers.DisplayCategory)
-	r.POST("/sendotp", controllers.SendOtp)
-	r.POST("/checkotp", controllers.Checkotp)
+	r.POST("/signup", auth.Signup)
+	r.POST("/login", auth.Login)
+	r.GET("/listproduct", common.DisplayProduct)
+	r.GET("/displaycategory", common.DisplayCategory)
+	r.POST("/sendotp", common.SendOtp)
+	r.POST("/checkotp", common.Checkotp)
 }

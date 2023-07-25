@@ -14,6 +14,7 @@ type Product struct {
 	Quantity      int
 	Image         string
 	Description   string
-	Count         int
+	View          int
 	Orderd        int
+	Merchent      string
 }

@@ -2,34 +2,41 @@ package routes
 
 import (
 	"project/middleware"
-	"project/pkg/controllers"
+	"project/pkg/controllers/admin"
+	"project/pkg/controllers/payment"
 
 	"github.com/gin-gonic/gin"
 )
 
 func AdminRoute(r *gin.Engine) {
-
+	adminr := r.Group("/admin")
+	adminr.Use(middleware.AdminAuth)
 	// <--------------------------------USER MANAGMENT-------------------------------->
-	r.GET("/listuser", middleware.AdminAuth, controllers.ListUser)
-	r.PATCH("/block/:id", middleware.AdminAuth, controllers.BlockUser)
-	r.PATCH("/unblock/:id", middleware.AdminAuth, controllers.Unblock)
+	adminr.GET("/listuser", admin.ListUser)
+	adminr.PATCH("/block/:id", admin.BlockUser)
+	adminr.PATCH("/unblock/:id", admin.Unblock)
 
 	// <--------------------------------PRODUCT MANAGMENT<-------------------------------->
-	r.POST("/addproduct", middleware.AdminAuth, controllers.AddProduct)
-	r.PATCH("/editproduct", middleware.AdminAuth, controllers.EditProduct)
-	r.DELETE("/deleteproduct", middleware.AdminAuth, controllers.DeleteProduct)
+	adminr.POST("/addproduct", admin.AddProduct)
+	adminr.PATCH("/editproduct", admin.EditProduct)
+	adminr.DELETE("/deleteproduct", admin.DeleteProduct)
 
 	// <--------------------------------CATEGORY MANAGMENT<-------------------------------->
-	r.POST("/addcategory", middleware.AdminAuth, controllers.AddCategory)
-	r.PATCH("/editcategory", middleware.AdminAuth, controllers.EditCategory)
-	r.PUT("/deletecategory", middleware.AdminAuth, controllers.DeleteCategory)
+	adminr.POST("/addcategory", admin.AddCategory)
+	adminr.PATCH("/editcategory", admin.EditCategory)
+	adminr.PUT("/deletecategory", admin.DeleteCategory)
 
-	r.POST("/addpayment", middleware.AdminAuth, controllers.AddPaymentMethod)
-	r.POST("/addcoupen", middleware.AdminAuth, controllers.AddCoupen)
-	r.GET("/listcoupon", middleware.AdminAuth, controllers.ListCoupon)
+	adminr.POST("/addpayment", payment.AddPaymentMethod)
+	adminr.POST("/addcoupen", admin.AddCoupen)
+	adminr.GET("/listcoupon", admin.ListCoupon)
 
-	r.POST("/addproductoffer", middleware.AdminAuth, controllers.AddProductOffer)
-	r.POST("/addcategoryoffer", middleware.AdminAuth, controllers.AddCategoryOffer)
-	r.POST("/return", middleware.RequireAuth, controllers.RetutnOrder)
+	adminr.POST("/addproductoffer", admin.AddProductOffer)
+	adminr.POST("/addcategoryoffer", admin.AddCategoryOffer)
+
+	adminr.POST("/updateorderstatus", admin.OrderStatus)
+	adminr.GET("/listorder", admin.Listorders)
+	adminr.GET("/listreturn", admin.ListReturn)
+	adminr.POST("/updatereturnstatus", admin.ReturnManangement)
+	adminr.POST("/cashback", admin.Cashback)
 
 }

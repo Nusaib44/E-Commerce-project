@@ -19,4 +19,6 @@ func SyncDB() {
 	DB.AutoMigrate(models.CategoryOffers{})
 	DB.AutoMigrate(models.Return{})
 	DB.AutoMigrate(models.Walet{})
+	DB.AutoMigrate(models.Merchent{})
+	DB.AutoMigrate(models.ProductQueue{})
 }

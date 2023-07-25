@@ -1,4 +1,4 @@
-package controllers
+package user
 
 import (
 	"fmt"
@@ -57,6 +57,7 @@ func PlaceOrder(g *gin.Context) {
 
 		println(payment, ".......payment")
 		if payment == 2 {
+
 			StripePayment(g)
 		}
 
@@ -88,9 +89,13 @@ func PlaceOrder(g *gin.Context) {
 	// respond
 
 }
+
+func StripePayment(g *gin.Context) {
+	panic("unimplemented")
+}
 func ListOrder(g *gin.Context) {
 	userID := function.GetUserId(g)
-	var orders []response.Update
+	var orders []models.Order
 	initializers.DB.Raw("SELECT *FROM orders WHERE user_id=?", userID).Scan(&orders)
 	response.SurcessMessage(g, "displaying order", orders)
 }
@@ -122,7 +127,7 @@ func RetutnOrder(g *gin.Context) {
 	println(orderId, "orderid")
 	var product models.Order
 	initializers.DB.Raw("SELECT product_id, quantity,price FROM orders WHERE id=?", orderId).Scan(&product)
-	initializers.DB.Raw("update orders set status=? where product=? and user").Scan(&product)
+	// initializers.DB.Raw("update orders set status=? where product=? and user").Scan(&product)
 	order := models.Return{
 		UserID:    userId,
 		ProductID: product.ProductId,
@@ -138,9 +143,5 @@ func RetutnOrder(g *gin.Context) {
 	}
 
 	response.SurcessMessage(g, "order returned", order)
-	var walet models.Walet
-	var balance int
-	initializers.DB.Raw("select balance from walets where id=?", userId).Scan(&balance)
-	newbalance := balance + product.Price
-	initializers.DB.Raw("UPDATE walets SET balance=? where id=?", newbalance, userId).Scan(&walet)
+
 }

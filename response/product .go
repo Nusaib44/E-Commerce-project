@@ -9,5 +9,6 @@ type Product struct {
 	CategoryOffer int
 	Total         int
 	Image         string
+	View         int
 	Description   string
 }

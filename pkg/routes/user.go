@@ -2,8 +2,8 @@ package routes
 
 import (
 	"project/middleware"
-	"project/pkg/controllers"
-
+	"project/pkg/controllers/common"
+	"project/pkg/controllers/user"
 	// "project/middleware"
 
 	"github.com/gin-gonic/gin"
@@ -11,22 +11,29 @@ import (
 
 func UserRoute(r *gin.Engine) {
 
-	r.GET("/cart", middleware.RequireAuth, controllers.Cart)
-	r.POST("/addtocart", middleware.RequireAuth, controllers.AddToCart)
-	r.POST("/updatecartitemquantity", middleware.RequireAuth, controllers.UpdateCartItemQuantity)
-	r.DELETE("/cartitemdelete", middleware.RequireAuth, controllers.CartItemDelete)
+	users := r.Group("/user")
+	users.Use(middleware.RequireAuth)
 
-	r.POST("/addaddress", middleware.RequireAuth, controllers.AddNewAddress)
-	r.POST("/checkout", middleware.RequireAuth, controllers.Checkout)
+	users.GET("/product", common.ViewProduct)
+	users.GET("/displaycategory", common.DisplayCategory)
 
-	r.POST("/placeorder", middleware.RequireAuth, controllers.PlaceOrder)
-	r.GET("/listorder", middleware.RequireAuth, controllers.ListOrder)
-	r.POST("/ordercancelation", middleware.RequireAuth, controllers.OrderCancelation)
+	users.GET("/cart", user.Cart)
+	users.POST("/addtocart", user.AddToCart)
+	users.POST("/updatecartitemquantity", user.UpdateCartItemQuantity)
+	users.DELETE("/cartitemdelete", user.CartItemDelete)
 
-	r.GET("/userinfo", middleware.RequireAuth, controllers.UserInfo)
-	r.POST("/edituserinfo", middleware.RequireAuth, controllers.EditUserInfo)
-	r.POST("/editpassword", middleware.RequireAuth, controllers.ChangePassword)
-	r.POST("/stripe", middleware.RequireAuth, controllers.StripePayment)
-	r.POST("/validatecoupon", middleware.RequireAuth, controllers.ValidateCoupen)
+	users.POST("/addaddress", user.AddNewAddress)
+	users.POST("/checkout", user.Checkout)
+
+	users.POST("/placeorder", user.PlaceOrder)
+	users.GET("/listorder", user.ListOrder)
+	users.POST("/ordercancelation", user.OrderCancelation)
+
+	users.GET("/userinfo", user.UserInfo)
+	users.POST("/edituserinfo", user.EditUserInfo)
+	users.POST("/editpassword", user.ChangePassword)
+	users.POST("/stripe", user.StripePayment)
+	users.POST("/validatecoupon", user.ValidateCoupen)
+	users.POST("/return", user.RetutnOrder)
 
 }
