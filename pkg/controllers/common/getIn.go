@@ -85,5 +85,3 @@ func Checkotp(g *gin.Context) {
 		fmt.Println("Incorrect!")
 	}
 }
-
-
